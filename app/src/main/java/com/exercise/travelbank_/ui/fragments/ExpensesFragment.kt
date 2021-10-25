@@ -31,10 +31,7 @@ class ExpensesFragment : Fragment() {
         activity?.title = "Expenses"
 
 
-        binding.button.setOnClickListener{
 
-            findNavController().navigate(R.id.action_expensesFragment_to_expenseDetailsFragment)
-        }
 
         return binding.root
 

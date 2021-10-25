@@ -1,120 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintTop_toTopOf="parent">
+    <data>
+        <variable
+            name="expenses"
+            type="com.exercise.travelbank_.models.ExpensesDTO" />
+    </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/profile_pic"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/user" />
 
-            <TextView
-                android:id="@+id/merchantName"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="4dp"
-                android:text="New Laptop"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/profile_pic"
-                app:layout_constraintTop_toTopOf="@+id/profile_pic" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="$2421.71"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/date"
-                app:layout_constraintStart_toStartOf="@+id/date"
-                app:layout_constraintTop_toBottomOf="@+id/date" />
+                <ImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/user" />
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="41dp"
-                android:layout_height="11dp"
-                android:layout_marginStart="283dp"
-                android:gravity="center"
-                android:text="Jul 13"
-                android:textSize="8sp"
+                <TextView
+                    android:id="@+id/merchantName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="4dp"
+                    setMerchantName="@{expenses.expenseVenueTitle}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/profile_pic"
+                    app:layout_constraintTop_toTopOf="@+id/profile_pic" />
 
-                app:layout_constraintStart_toEndOf="@+id/profile_pic"
-                app:layout_constraintTop_toTopOf="@+id/profile_pic" />
+                <TextView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    setAmount="@{expenses.amount}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/date"
+                    app:layout_constraintStart_toStartOf="@+id/date"
+                    app:layout_constraintTop_toBottomOf="@+id/date" />
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="18dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintTop_toBottomOf="@+id/profile_pic"
-                tools:layout_editor_absoluteX="28dp" />
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="41dp"
+                    android:layout_height="11dp"
+                    android:layout_marginStart="283dp"
+                    android:gravity="center"
+                    setDate="@{expenses.date}"
+                    android:textSize="8sp"
+                    app:layout_constraintStart_toEndOf="@+id/profile_pic"
+                    app:layout_constraintTop_toTopOf="@+id/profile_pic" />
 
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/category"
-                style="@style/CustomChipStyle"
-                android:layout_width="52dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="Meals"
-                android:textSize="10sp"
-                app:layout_constraintStart_toStartOf="@+id/view"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/currency"
-                style="@style/CustomChipStyle"
-                android:layout_width="52dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="272dp"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="EUR"
-                android:textSize="10dp"
-                app:layout_constraintStart_toStartOf="@+id/view"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
-
-            <ImageView
-                android:id="@+id/reciept_attachment"
-                android:layout_width="50dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="@+id/currency"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                tools:srcCompat="@drawable/listimage" />
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="18dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_pic"
+                    tools:layout_editor_absoluteX="28dp" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/category"
+                    style="@style/CustomChipStyle"
+                    android:layout_width="52dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    setCategory="@{expenses.tripBudgetCategory}"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="@+id/view"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/currency"
+                    style="@style/CustomChipStyle"
+                    android:layout_width="52dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="272dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    setCurrency="@{expenses.currencyCode}"
+                    android:textSize="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/view"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                <ImageView
+                    android:id="@+id/reciept_attachment"
+                    android:layout_width="50dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="4dp"
+                    loadThumbNail="@{expenses.attachments}"
+                    app:layout_constraintStart_toStartOf="@+id/currency"
+                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    tools:srcCompat="@drawable/listimage" />
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

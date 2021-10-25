@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name" />
+    <string name="No_Price_Found"> </string>
+    <string name="price">$ %s</string>
 
 
 

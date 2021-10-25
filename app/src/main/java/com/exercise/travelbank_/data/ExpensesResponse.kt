@@ -1,4 +1,5 @@
 package com.exercise.travelbank_.data
 
-class ExpensesResponse {
-}
+import com.exercise.travelbank_.models.ExpensesDTO
+
+data class ExpensesResponse(val expenses: List<ExpensesDTO>)
