@@ -44,12 +44,16 @@ class ExpensesFragment : Fragment() {
 
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         expensesViewModel = ViewModelProvider(requireActivity()).get(
             ExpensesViewModel::class.java
         )
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +63,6 @@ class ExpensesFragment : Fragment() {
 
         activity?.title = "Expenses"
         binding.lifecycleOwner = this
-
         setHasOptionsMenu(true)
 
         setUpList()
@@ -76,6 +79,24 @@ class ExpensesFragment : Fragment() {
 
         }
 
+        binding.swipeRefresh.setOnRefreshListener {
+            lifecycleScope.launch {
+                expensesNetworkListener = ExpensesNetworkListener()
+                if(expensesNetworkListener.internetConnection(requireContext())){
+                    requestDataAfterRefresh()
+                    binding.swipeRefresh.isRefreshing = false
+
+                }
+                else {
+                    Toast.makeText(requireContext(),"Please Check Your Network Connection & Retry",Toast.LENGTH_LONG).show()
+                    binding.swipeRefresh.isRefreshing = false
+                }
+            }
+        }
+
+
+
+
         return binding.root
 
     }
@@ -88,13 +109,14 @@ class ExpensesFragment : Fragment() {
     }
 
     private fun readCachedExpenses(){
-        var totalPrice = 0.0
+
 
         lifecycleScope.launch {
             expensesViewModel.readExpenses.observeOnce(viewLifecycleOwner, {
                 database->
                 if(database.isNotEmpty()){
 
+                   var totalPrice = 0.0
                     mainAdapter.setData(database[0].expensesResponse)
 
                     for(amount in database[0].expensesResponse){
@@ -112,17 +134,27 @@ class ExpensesFragment : Fragment() {
 
     }
 
+    private fun requestDataAfterRefresh(){
+
+
+        expensesViewModel.getExpenses()
+
+        readCachedExpenses()
+    }
+
     private fun requestRemoteData() {
-        var totalPrice = 0.0
+
         expensesViewModel.getExpenses()
         expensesViewModel.expensesResponse.observe(viewLifecycleOwner,{
             response ->
             when(response){
                 is NetworkResource.Success -> {
 
+                    var totalPrice = 0.0
                     response.data?.let {
-                        for(amount in it){
-                            totalPrice += amount.amount
+                            for(amount in it){
+                                totalPrice += amount.amount
+
                         }
 
                         binding.totalAmount.text = totalPrice.toString()
@@ -130,7 +162,7 @@ class ExpensesFragment : Fragment() {
 
                 }
                 is NetworkResource.Error -> {
-                    !binding.swipeRefresh.isEnabled
+
                     loadLocalCacheData()
                     Toast.makeText(
                         requireContext(),
@@ -141,7 +173,7 @@ class ExpensesFragment : Fragment() {
 
                 }
                 is NetworkResource.Loading -> {
-                    binding.swipeRefresh.isEnabled
+
                 }
             }
         })
@@ -161,6 +193,8 @@ class ExpensesFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+
 
 }
 
