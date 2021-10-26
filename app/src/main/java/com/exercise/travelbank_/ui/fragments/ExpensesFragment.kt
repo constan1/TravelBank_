@@ -1,14 +1,34 @@
 package com.exercise.travelbank_.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.exercise.travelbank_.R
-import com.exercise.travelbank_.databinding.FragmentExpensesBinding
+import android.widget.Toast
 
+
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+import com.exercise.travelbank_.R
+import com.exercise.travelbank_.bindingadapters.adapters.ExpensesAdapter
+import com.exercise.travelbank_.databinding.FragmentExpensesBinding
+import com.exercise.travelbank_.util.ExpensesNetworkListener
+import com.exercise.travelbank_.util.NetworkResource
+import com.exercise.travelbank_.util.observeOnce
+import com.exercise.travelbank_.viewmodels.ExpensesViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class ExpensesFragment : Fragment() {
 
 
@@ -16,10 +36,19 @@ class ExpensesFragment : Fragment() {
     private val binding get() = _binding!!
 
 
+    private lateinit var expensesViewModel: ExpensesViewModel
+    private val mainAdapter by lazy { ExpensesAdapter() }
+
+    private lateinit var expensesNetworkListener: ExpensesNetworkListener
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
+        expensesViewModel = ViewModelProvider(requireActivity()).get(
+            ExpensesViewModel::class.java
+        )
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,12 +58,109 @@ class ExpensesFragment : Fragment() {
         _binding = FragmentExpensesBinding.inflate(inflater,container,false)
 
         activity?.title = "Expenses"
+        binding.lifecycleOwner = this
 
+        setHasOptionsMenu(true)
 
+        setUpList()
 
+        lifecycleScope.launch {
+           expensesNetworkListener = ExpensesNetworkListener()
+            if(expensesNetworkListener.internetConnection(requireContext())){
+                readCachedExpenses()
+            }
+            else {
+                readCachedExpenses()
+                Toast.makeText(requireContext(),"Please Check Your Network Connection & Retry",Toast.LENGTH_LONG).show()
+            }
+
+        }
 
         return binding.root
 
     }
+    private fun setUpList(){
+        val recyclerViewRoot = binding.root.findViewById<RecyclerView>(R.id.expenses_list)
+
+        recyclerViewRoot.adapter = mainAdapter
+        recyclerViewRoot.layoutManager = LinearLayoutManager(requireContext())
+        binding.swipeRefresh.isEnabled
+    }
+
+    private fun readCachedExpenses(){
+        var totalPrice = 0.0
+
+        lifecycleScope.launch {
+            expensesViewModel.readExpenses.observeOnce(viewLifecycleOwner, {
+                database->
+                if(database.isNotEmpty()){
+
+                    mainAdapter.setData(database[0].expensesResponse)
+
+                    for(amount in database[0].expensesResponse){
+                        totalPrice +=amount.amount
+                    }
+                    binding.totalAmount.text = totalPrice.toString()
+
+                }
+                else {
+                    requestRemoteData()
+                }
+
+            })
+        }
+
+    }
+
+    private fun requestRemoteData() {
+        var totalPrice = 0.0
+        expensesViewModel.getExpenses()
+        expensesViewModel.expensesResponse.observe(viewLifecycleOwner,{
+            response ->
+            when(response){
+                is NetworkResource.Success -> {
+
+                    response.data?.let {
+                        for(amount in it){
+                            totalPrice += amount.amount
+                        }
+
+                        binding.totalAmount.text = totalPrice.toString()
+                        mainAdapter.setData(it)}
+
+                }
+                is NetworkResource.Error -> {
+                    !binding.swipeRefresh.isEnabled
+                    loadLocalCacheData()
+                    Toast.makeText(
+                        requireContext(),
+                       response.data?.get(0).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+
+                }
+                is NetworkResource.Loading -> {
+                    binding.swipeRefresh.isEnabled
+                }
+            }
+        })
+    }
+
+    private fun loadLocalCacheData() {
+        lifecycleScope.launch {
+            expensesViewModel.readExpenses.observe(viewLifecycleOwner, {database ->
+                if(database.isNotEmpty()){
+                    mainAdapter.setData(database[0].expensesResponse)
+                }
+            })
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
 }
+

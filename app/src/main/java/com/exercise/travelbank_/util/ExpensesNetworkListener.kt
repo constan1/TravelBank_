@@ -8,37 +8,29 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @ExperimentalCoroutinesApi
-class ExpensesNetworkListener: ConnectivityManager.NetworkCallback()  {
-    private val isNetworkAvailable = MutableStateFlow(false)
-
-    fun checkConnection(context: Context): MutableStateFlow<Boolean>{
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connectivityManager.registerDefaultNetworkCallback(this)
-
-        var isConnected= false
+class ExpensesNetworkListener {
 
 
-        connectivityManager.allNetworks.forEach { network ->
-            val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
-            networkCapabilities?.let{
-                if(it.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
-                    isConnected = true
-                    return@forEach
+
+        fun internetConnection(context:Context): Boolean{
+
+            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+
+            if(capabilities!=null){
+                if(capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)){
+                    return true
+                }
+                else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
+                    return true
+                }
+                else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)){
+                    return true
                 }
             }
+            return false
         }
-
-        isNetworkAvailable.value = isConnected
-
-        return isNetworkAvailable
     }
 
-    override fun onLost(network: Network) {
-        isNetworkAvailable.value = false
-    }
-
-    override fun onAvailable(network: Network) {
-        isNetworkAvailable.value = true
-    }
-
-}

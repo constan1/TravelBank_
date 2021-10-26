@@ -1,6 +1,7 @@
 package com.exercise.travelbank_.models
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
@@ -8,15 +9,24 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class ExpensesDTO(
-    val amount: Double?,
-    val attachments: @RawValue Attachments?,
-    val date:String,
+    @SerializedName("amount")
+    val amount: Double,
+
+    @SerializedName("attachments")
+    val attachments: @RawValue List<Attachments>,
+
+    @SerializedName("date")
+    val date: String,
+
+    @SerializedName("description")
     val description: String,
-    val expenseVenueTitle: String?,
-    val tripBudgetCategory:String,
-    val currencyCode:String?,
 
+    @SerializedName("expenseVenueTitle")
+    val expenseVenueTitle: String,
 
+    @SerializedName("tripBudgetCategory")
+    val tripBudgetCategory: String,
 
-
+    @SerializedName("currencyCode")
+    val currencyCode: String,
 ):Parcelable

@@ -1,11 +1,13 @@
 package com.exercise.travelbank_.models
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
+
 
 @Parcelize
 data class Attachments(
-    val thumbnails : @RawValue List<Thumbnails>
+    @SerializedName("thumbnails")
+    val thumbnails: Thumbnails
 ):Parcelable

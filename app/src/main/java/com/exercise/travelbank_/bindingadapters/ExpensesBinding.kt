@@ -15,12 +15,19 @@ class ExpensesBinding {
 
         @BindingAdapter("loadThumbNail")
         @JvmStatic
-        fun loadThumbNail(imageView: ImageView, attachments: Attachments) {
+        fun loadThumbNail(imageView: ImageView, attachements: List<Attachments>?) {
 
-            imageView.load( attachments.thumbnails[0].list) {
-                crossfade(600)
-                error(R.drawable.ic_image_error)
+            if(attachements == null){
+                imageView.load(R.drawable.ic_image_error){
+                    crossfade(600)
+                }
             }
+            else {
+                imageView.load( attachements[0].thumbnails.list) {
+                    crossfade(600)
+                }
+            }
+
         }
 
         @BindingAdapter("setMerchantName")
@@ -33,10 +40,9 @@ class ExpensesBinding {
         @BindingAdapter("setDate")
         @JvmStatic
         fun setDate(textView: TextView, title: String) {
-            val unconvertedDate = title
             val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
 
-            val dateFormatted = unconvertedDate.format(formatter)
+            val dateFormatted = title.format(formatter)
 
             textView.text = dateFormatted
 

@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-import com.exercise.travelbank_.data.ExpensesResponse
-
 import com.exercise.travelbank_.databinding.ItemExpensesRowBinding
 import com.exercise.travelbank_.models.ExpensesDTO
 import com.exercise.travelbank_.util.ExpensesDiffUtil
@@ -47,11 +45,11 @@ class ExpensesAdapter : RecyclerView.Adapter<ExpensesAdapter.ExpensesHolder>() {
         return currentExpense.size
     }
 
-    fun setData(newData: ExpensesResponse){
-        val expensesDiffUtil = ExpensesDiffUtil(currentExpense, newData.expenses)
+    fun setData(newData: List<ExpensesDTO>){
+        val expensesDiffUtil = ExpensesDiffUtil(currentExpense, newData)
         val diffUtilResult = DiffUtil.calculateDiff(expensesDiffUtil)
 
-        currentExpense = newData.expenses
+        currentExpense = newData
 
         diffUtilResult.dispatchUpdatesTo(this)
     }
