@@ -13,7 +13,7 @@ data class ExpensesDTO(
     val amount: Double,
 
     @SerializedName("attachments")
-    val attachments: @RawValue List<Attachments>,
+    val attachments: @RawValue List<Attachments>?,
 
     @SerializedName("date")
     val date: String,

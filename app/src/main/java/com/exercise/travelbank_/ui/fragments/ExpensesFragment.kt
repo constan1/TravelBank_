@@ -1,7 +1,6 @@
 package com.exercise.travelbank_.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.Toast
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -24,7 +22,6 @@ import com.exercise.travelbank_.util.observeOnce
 import com.exercise.travelbank_.viewmodels.ExpensesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
@@ -105,7 +102,7 @@ class ExpensesFragment : Fragment() {
 
         recyclerViewRoot.adapter = mainAdapter
         recyclerViewRoot.layoutManager = LinearLayoutManager(requireContext())
-        binding.swipeRefresh.isEnabled
+
     }
 
     private fun readCachedExpenses(){

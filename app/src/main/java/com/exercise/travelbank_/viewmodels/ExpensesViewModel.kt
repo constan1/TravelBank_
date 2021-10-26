@@ -1,13 +1,17 @@
 package com.exercise.travelbank_.viewmodels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
+import android.text.format.DateFormat
 import androidx.lifecycle.*
+import coil.load
+import com.exercise.travelbank_.R
 import com.exercise.travelbank_.data.Repository
 import com.exercise.travelbank_.data.database.ExpensesEntity
+import com.exercise.travelbank_.databinding.FragmentExpenseDetailsBinding
 import com.exercise.travelbank_.models.ExpensesDTO
 import com.exercise.travelbank_.util.NetworkResource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +19,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
-import kotlin.math.expm1
 
 @HiltViewModel
 class ExpensesViewModel @Inject constructor(
@@ -56,11 +61,11 @@ class ExpensesViewModel @Inject constructor(
                val response = repository.remoteData.getExpenses()
                expensesResponse.value = handleReturnedResponse(response)
 
-               val expensesResponse_ = expensesResponse.value!!.data
+               val expensesResponseValue = expensesResponse.value!!.data
 
 
-               if(expensesResponse_!=null){
-                   cacheRemoteExpenses(expensesResponse_)
+               if(expensesResponseValue!=null){
+                   cacheRemoteExpenses(expensesResponseValue)
                }
 
            } catch (e:Exception){
@@ -79,7 +84,7 @@ class ExpensesViewModel @Inject constructor(
         cacheExpenses(expensesEntity)
     }
 
-    private fun handleReturnedResponse(response: Response<List<ExpensesDTO>>): NetworkResource<List<ExpensesDTO>>? {
+    private fun handleReturnedResponse(response: Response<List<ExpensesDTO>>): NetworkResource<List<ExpensesDTO>> {
 
         return when {
             response.code() == 404 ->{
@@ -108,6 +113,35 @@ class ExpensesViewModel @Inject constructor(
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
+        }
+    }
+
+
+    /** Expense Details */
+
+    @SuppressLint("SimpleDateFormat")
+    fun dateConverter(date: String) : String{
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+        val convertedDate: Date = format.parse(date)!!
+        val month = DateFormat.format("MMM", convertedDate) as String
+        val day = DateFormat.format("dd", convertedDate) as String
+        val year = DateFormat.format("yyyy",convertedDate) as String
+
+        return "$month $day, $year"
+
+    }
+
+    fun loadImage( binding: FragmentExpenseDetailsBinding, image: String?){
+        if(image == null){
+            binding.listImage.load(R.drawable.ic_image_error){
+                crossfade(600)
+            }
+        }
+        else {
+            binding.listImage.load(image){
+                crossfade(600)
+            }
         }
     }
 

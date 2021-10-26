@@ -18,5 +18,12 @@
         android:id="@+id/expenseDetailsFragment"
         android:name="com.exercise.travelbank_.ui.fragments.ExpenseDetailsFragment"
         android:label="fragment_expense_details"
-        tools:layout="@layout/fragment_expense_details" />
+        tools:layout="@layout/fragment_expense_details" >
+        <argument
+            android:name="expenses"
+            app:argType="com.exercise.travelbank_.models.ExpensesDTO" />
+        <action
+            android:id="@+id/action_expenseDetailsFragment_to_expensesFragment"
+            app:destination="@id/expensesFragment" />
+    </fragment>
 </navigation>

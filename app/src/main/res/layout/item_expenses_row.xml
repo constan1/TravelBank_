@@ -11,20 +11,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        onExpenseToDetails="@{expenses}">
+
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="10dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:cardCornerRadius="5dp"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
 
                 <ImageView
                     android:id="@+id/profile_pic"
@@ -38,37 +44,38 @@
 
                 <TextView
                     android:id="@+id/merchantName"
+                    setMerchantName="@{expenses.expenseVenueTitle}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="4dp"
-                    setMerchantName="@{expenses.expenseVenueTitle}"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/profile_pic"
                     app:layout_constraintTop_toTopOf="@+id/profile_pic" />
 
                 <TextView
                     android:id="@+id/amount"
+                    setAmount="@{expenses.amount}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
                     android:gravity="center"
-                    setAmount="@{expenses.amount}"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/date"
-                    app:layout_constraintStart_toStartOf="@+id/date"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/date" />
 
                 <TextView
                     android:id="@+id/date"
-                    android:layout_width="41dp"
-                    android:layout_height="11dp"
-                    android:layout_marginStart="283dp"
-                    android:gravity="center"
                     setDate="@{expenses.date}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="11dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="center"
                     android:textSize="8sp"
-                    app:layout_constraintStart_toEndOf="@+id/profile_pic"
-                    app:layout_constraintTop_toTopOf="@+id/profile_pic" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/view"
@@ -83,12 +90,12 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/category"
                     style="@style/CustomChipStyle"
-                    android:layout_width="52dp"
+                    setCategory="@{expenses.tripBudgetCategory}"
+                    android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    setCategory="@{expenses.tripBudgetCategory}"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="@+id/view"
                     app:layout_constraintTop_toBottomOf="@+id/view"
@@ -97,32 +104,39 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/currency"
                     style="@style/CustomChipStyle"
-                    android:layout_width="52dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="272dp"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
                     setCurrency="@{expenses.currencyCode}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="60dp"
+                    android:gravity="center"
                     android:textSize="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/view"
-                    app:layout_constraintTop_toBottomOf="@+id/view"
+                    app:layout_constraintEnd_toEndOf="@+id/reciept_attachment"
+                    app:layout_constraintTop_toTopOf="@+id/reciept_attachment"
                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
                 <ImageView
                     android:id="@+id/reciept_attachment"
+                    loadThumbNail_="@{expenses.attachments}"
                     android:layout_width="50dp"
                     android:layout_height="28dp"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="4dp"
-                    loadThumbNail="@{expenses.attachments}"
-                    app:layout_constraintStart_toStartOf="@+id/currency"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view"
                     tools:srcCompat="@drawable/listimage" />
+
+                <TextView
+                    android:id="@+id/dollarSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="$"
+                    app:layout_constraintEnd_toStartOf="@+id/amount"
+                    app:layout_constraintTop_toTopOf="@+id/amount" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

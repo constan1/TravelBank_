@@ -1,19 +1,44 @@
 package com.exercise.travelbank_.bindingadapters
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
 import com.exercise.travelbank_.R
 import com.exercise.travelbank_.models.Attachments
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import java.text.SimpleDateFormat
+import android.text.format.DateFormat
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.findNavController
+import com.exercise.travelbank_.models.ExpensesDTO
+import com.exercise.travelbank_.ui.fragments.ExpensesFragmentDirections
+
+import java.util.*
 
 class ExpensesBinding {
 
     companion object {
 
-        @BindingAdapter("loadThumbNail")
+
+
+
+        @BindingAdapter("onExpenseToDetails")
+        @JvmStatic
+        fun onExpensesToDetails(expensesRow: ConstraintLayout, expenses:ExpensesDTO){
+
+            expensesRow.setOnClickListener {
+                try {
+                    val action = ExpensesFragmentDirections.actionExpensesFragmentToExpenseDetailsFragment(expenses)
+                    expensesRow.findNavController().navigate(action)
+                } catch (e: Exception){
+
+                }
+            }
+        }
+
+
+        @BindingAdapter("loadThumbNail_")
         @JvmStatic
         fun loadThumbNail(imageView: ImageView, attachements: List<Attachments>?) {
 
@@ -37,14 +62,19 @@ class ExpensesBinding {
             textView.text = title
         }
 
+        @SuppressLint("SimpleDateFormat")
         @BindingAdapter("setDate")
         @JvmStatic
         fun setDate(textView: TextView, title: String) {
-            val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
 
-            val dateFormatted = title.format(formatter)
 
-            textView.text = dateFormatted
+            val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+            val date: Date = format.parse(title)!!
+            val month = DateFormat.format("MMM", date) as String
+            val day = DateFormat.format("dd", date) as String
+
+            ("$month $day").also { textView.text = it }
 
         }
 
