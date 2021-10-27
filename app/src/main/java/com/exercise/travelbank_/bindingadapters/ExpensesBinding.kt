@@ -1,6 +1,7 @@
 package com.exercise.travelbank_.bindingadapters
 
 import android.annotation.SuppressLint
+import android.net.Network
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -9,10 +10,14 @@ import com.exercise.travelbank_.R
 import com.exercise.travelbank_.models.Attachments
 import java.text.SimpleDateFormat
 import android.text.format.DateFormat
+import android.util.Log
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
+import com.exercise.travelbank_.data.database.ExpensesEntity
 import com.exercise.travelbank_.models.ExpensesDTO
 import com.exercise.travelbank_.ui.fragments.ExpensesFragmentDirections
+import com.exercise.travelbank_.util.NetworkResource
 
 import java.util.*
 
@@ -98,6 +103,80 @@ class ExpensesBinding {
             textView.text = category
 
         }
+
+
+        @BindingAdapter("networkResponseForImage","loadDataForImage",requireAll = true)
+        @JvmStatic
+        fun errorNoInternetImageView(
+            imageView: ImageView,
+            apiResponse:NetworkResource<List<ExpensesDTO>>?,
+            database: List<ExpensesEntity>?
+        ) {
+            if(apiResponse is NetworkResource.Error && database.isNullOrEmpty()){
+                imageView.visibility = View.VISIBLE
+            }
+            else if(apiResponse is NetworkResource.Loading){
+                imageView.visibility = View.INVISIBLE
+            }
+            else if(apiResponse is NetworkResource.Success){
+                imageView.visibility = View.INVISIBLE
+            }
+        }
+        @BindingAdapter("networkResponseForText", "loadDataForText",requireAll = true)
+        @JvmStatic
+        fun errorNoInternetTextview(
+            textView: TextView,
+            apiResponse: NetworkResource<List<ExpensesDTO>>?,
+            database: List<ExpensesEntity>?
+        )
+        {
+            if(apiResponse is NetworkResource.Error && database.isNullOrEmpty()){
+                textView.visibility = View.VISIBLE
+                textView.text = apiResponse.message.toString()
+
+            }
+            else if (apiResponse is NetworkResource.Loading)
+            {
+                textView.visibility = View.INVISIBLE
+
+            }
+            else if(apiResponse is NetworkResource.Success){
+
+                textView.visibility = View.INVISIBLE
+
+            }
+        }
+
+        @BindingAdapter("networkResponseForTextTotal", "loadDataForTextTotal",requireAll = true)
+        @JvmStatic
+        fun errorNoInternetTotalTextview(
+            textView: TextView,
+            apiResponse: NetworkResource<List<ExpensesDTO>>?,
+            database: List<ExpensesEntity>?
+        )
+        {
+            if(apiResponse is NetworkResource.Error && database.isNullOrEmpty()){
+                textView.visibility = View.INVISIBLE
+
+            }
+            else if (apiResponse is NetworkResource.Loading)
+            {
+                textView.text = "Loading..."
+                textView.visibility = View.VISIBLE
+
+            }
+            else if(apiResponse is NetworkResource.Success){
+
+                textView.text = "Total: "
+                textView.visibility = View.VISIBLE
+
+
+            }
+        }
+
+
     }
+
+
 
 }

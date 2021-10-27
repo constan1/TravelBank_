@@ -24,6 +24,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+import com.github.ybq.android.spinkit.sprite.Sprite
+
+
+import android.widget.ProgressBar
+import com.github.ybq.android.spinkit.style.Wave
+
+
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class ExpensesFragment : Fragment() {
@@ -40,6 +47,7 @@ class ExpensesFragment : Fragment() {
 
 
 
+    private lateinit var progressBar: ProgressBar
 
 
 
@@ -60,7 +68,11 @@ class ExpensesFragment : Fragment() {
 
         activity?.title = "Expenses"
         binding.lifecycleOwner = this
+        binding.expensesViewModel = expensesViewModel
         setHasOptionsMenu(true)
+
+
+
 
         setUpList()
 
@@ -113,6 +125,8 @@ class ExpensesFragment : Fragment() {
                 database->
                 if(database.isNotEmpty()){
 
+
+
                    var totalPrice = 0.0
                     mainAdapter.setData(database[0].expensesResponse)
 
@@ -146,6 +160,7 @@ class ExpensesFragment : Fragment() {
             response ->
             when(response){
                 is NetworkResource.Success -> {
+                    progressBar.visibility = View.GONE
 
                     var totalPrice = 0.0
                     response.data?.let {
@@ -159,18 +174,20 @@ class ExpensesFragment : Fragment() {
 
                 }
                 is NetworkResource.Error -> {
-
                     loadLocalCacheData()
-                    Toast.makeText(
-                        requireContext(),
-                       response.data?.get(0).toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-
+                    progressBar = binding.loading
+                    val wave: Sprite = Wave()
+                    progressBar.indeterminateDrawable = wave
+                    progressBar.visibility = View.GONE
                 }
-                is NetworkResource.Loading -> {
 
+                is NetworkResource.Loading ->{
+                   progressBar = binding.loading
+                    val wave: Sprite = Wave()
+                    progressBar.indeterminateDrawable = wave
+                    progressBar.visibility = View.VISIBLE
+
+                    //add progress bar here
                 }
             }
         })

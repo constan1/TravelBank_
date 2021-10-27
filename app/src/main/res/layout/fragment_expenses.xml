@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="expensesViewModel"
+            type="com.exercise.travelbank_.viewmodels.ExpensesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,18 +37,20 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="45dp"
                     android:layout_marginEnd="15dp"
-                    app:layout_constraintEnd_toEndOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="@+id/total"
                     app:layout_constraintHorizontal_bias="0.077"
-                    app:layout_constraintStart_toStartOf="@+id/textView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintStart_toStartOf="@+id/total"
+                    app:layout_constraintTop_toBottomOf="@+id/total" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="Total:"
+                    android:text="Total: "
+                    loadDataForTextTotal="@{expensesViewModel.readExpenses}"
+                    networkResponseForTextTotal="@{expensesViewModel.expensesResponse}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,7 +61,46 @@
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="15dp"
                     android:text=""
-                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintStart_toEndOf="@+id/total"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/noConnection"
+                    loadDataForText="@{expensesViewModel.readExpenses}"
+                    networkResponseForText="@{expensesViewModel.expensesResponse}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    loadDataForImage="@{expensesViewModel.readExpenses}"
+                    networkResponseForImage="@{expensesViewModel.expensesResponse}"
+                    android:layout_width="150dp"
+                    android:layout_height="99dp"
+                    android:layout_marginStart="308dp"
+                    android:layout_marginTop="216dp"
+                    android:visibility="invisible"
+                    app:layout_constraintStart_toStartOf="@+id/expenses_list"
+                    app:layout_constraintTop_toTopOf="@+id/expenses_list"
+                    app:srcCompat="@drawable/noconnection" />
+
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/loading.."
+                    style="@style/SpinKitView.Large.Circle"
+                    android:layout_width="49dp"
+                    android:layout_height="39dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="304dp"
+                    android:layout_marginEnd="180dp"
+                    android:visibility="invisible"
+                    app:SpinKit_Color="@color/main"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

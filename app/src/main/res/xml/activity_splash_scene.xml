@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:autoTransition="animateToEnd"
+        motion:duration="1300">
+       <KeyFrameSet>
+           <KeyAttribute
+               motion:motionTarget="@+id/imageView4"
+               motion:framePosition="7"
+               android:alpha="0.5" />
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/imageView4"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rotationY="-50"
+            android:translationY="-50dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="4dp" />
+        <Constraint
+            android:id="@+id/imageView5"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rotationY="35"
+            motion:layout_constraintTop_toTopOf="@+id/imageView4"
+            android:layout_marginTop="143dp"
+            android:alpha="0" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/imageView4"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rotationY="0"
+            android:translationY="0dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="4dp" />
+        <Constraint
+            android:id="@+id/imageView5"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rotationY="0"
+            motion:layout_constraintTop_toTopOf="@+id/imageView4"
+            android:layout_marginTop="143dp" />
+    </ConstraintSet>
+</MotionScene>
