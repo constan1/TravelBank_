@@ -9,6 +9,245 @@
     tools:layout_editor_absoluteY="-1dp">
 
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp"
+        android:fillViewport="true"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/merchant_details_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="52dp"
+                    android:text="Merchant"
+
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/editTextMerchantTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:text="Lunch"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/merchant_details_title"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/merchant_details_title"
+                    app:layout_constraintTop_toBottomOf="@+id/merchant_details_title" />
+
+
+                <LinearLayout
+                    android:layout_width="98dp"
+                    android:layout_height="match_parent">
+
+
+                    <ImageView
+                        android:id="@+id/listImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/listimage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/total_details_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Total"
+                    android:textSize="12sp"
+                    android:layout_marginStart="36dp"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextMerchantTitle"
+                    app:layout_constraintHorizontal_bias="0.024"
+                    app:layout_constraintStart_toStartOf="@+id/editTextMerchantTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextMerchantTitle" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/editTextAmount"
+                    android:layout_width="149dp"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:text="$20.00"
+                    android:textStyle="bold"
+                    android:layout_marginStart="36dp"
+                    app:layout_constraintEnd_toEndOf="@+id/total_details_title"
+                    app:layout_constraintHorizontal_bias="0.016"
+                    app:layout_constraintStart_toStartOf="@+id/total_details_title"
+                    app:layout_constraintTop_toBottomOf="@+id/total_details_title" />
+
+                <LinearLayout
+                    android:layout_width="239dp"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/currencyChip"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="80dp"
+                        android:checkable="false"
+                        android:gravity="center"
+                        android:text="Usd"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="@+id/listImage"
+                        app:layout_constraintStart_toStartOf="@+id/listImage"
+                        app:layout_constraintTop_toBottomOf="@+id/listImage"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/date_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Date"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextAmount"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/editTextAmount"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextAmount" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+                    <TextView
+                        android:id="@+id/categoryTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="29.5dp"
+                        android:layout_marginStart="190dp"
+                        android:text="Category"
+
+                        app:layout_constraintEnd_toEndOf="@+id/category_details"
+                        app:layout_constraintStart_toStartOf="@+id/category_details"
+                        app:layout_constraintTop_toBottomOf="@+id/category_details" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:id="@+id/editTextdate"
+                    android:layout_width="149dp"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textPersonName"
+                    android:layout_marginStart="36dp"
+                    android:text="Jul 13, 2021"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/date_details"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/date_details"
+                    app:layout_constraintTop_toBottomOf="@+id/date_details" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/ccategory_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="70dp"
+                        android:layout_marginTop="10dp"
+                        android:text="meals"
+                        >
+
+
+                    </TextView>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/editText_details_description"
+                    android:layout_width="285dp"
+                    android:layout_height="113dp"
+                    android:layout_marginTop="52dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/ExpensesFragmentColor"
+                    android:ems="10"
+                    android:gravity="top|clip_horizontal"
+                    android:layout_marginStart="36dp"
+                    android:hint="Description(Optional)"
+                    android:inputType="textMultiLine"
+                    android:lines="10"
+                    android:maxLines="15"
+
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/editTextdate"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextdate" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
     <ImageView
         android:id="@+id/close"
         android:layout_width="23dp"
@@ -39,166 +278,6 @@
         tools:layout_editor_absoluteX="0dp" />
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="770dp"
-        android:fillViewport="true"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/view">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/merchant_details_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="36dp"
-                android:text="Merchant"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/editTextMerchantTitle"
-                android:layout_width="149dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Lunch"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/merchant_details_title"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/merchant_details_title"
-                app:layout_constraintTop_toBottomOf="@+id/merchant_details_title" />
-
-            <EditText
-                android:id="@+id/editTextAmount"
-                android:layout_width="149dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:text="$20.00"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/total_details_title"
-                app:layout_constraintHorizontal_bias="0.016"
-                app:layout_constraintStart_toStartOf="@+id/total_details_title"
-                app:layout_constraintTop_toBottomOf="@+id/total_details_title" />
-
-            <EditText
-                android:id="@+id/editTextdate"
-                android:layout_width="149dp"
-                android:layout_height="48dp"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textPersonName"
-                android:text="Jul 13, 2021"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/date_details"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/date_details"
-                app:layout_constraintTop_toBottomOf="@+id/date_details" />
-
-            <TextView
-                android:id="@+id/total_details_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Total"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/editTextMerchantTitle"
-                app:layout_constraintHorizontal_bias="0.024"
-                app:layout_constraintStart_toStartOf="@+id/editTextMerchantTitle"
-                app:layout_constraintTop_toBottomOf="@+id/editTextMerchantTitle" />
-
-            <TextView
-                android:id="@+id/date_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="Date"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/editTextAmount"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/editTextAmount"
-                app:layout_constraintTop_toBottomOf="@+id/editTextAmount" />
-
-            <TextView
-                android:id="@+id/category_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:text="Category"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/currencyChip"
-                app:layout_constraintStart_toStartOf="@+id/currencyChip"
-                app:layout_constraintTop_toBottomOf="@+id/currencyChip" />
-
-            <EditText
-                android:id="@+id/editText_details_description"
-                android:layout_width="285dp"
-                android:layout_height="113dp"
-                android:layout_marginTop="52dp"
-                android:background="@color/ExpensesFragmentColor"
-                android:ems="10"
-                android:gravity="top|clip_horizontal"
-                android:hint="Description(Optional)"
-                android:inputType="textMultiLine"
-                android:lines="10"
-                android:maxLines="15"
-
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/editTextdate"
-                app:layout_constraintTop_toBottomOf="@+id/editTextdate" />
-
-            <!--    <Spinner-->
-            <!--        android:id="@+id/category_detail_spinner"-->
-            <!--        android:layout_width="131dp"-->
-            <!--        android:layout_height="48dp"-->
-            <!--        android:textStyle="bold"-->
-            <!--        app:layout_constraintEnd_toEndOf="@+id/category_details"-->
-            <!--        app:layout_constraintHorizontal_bias="0.0"-->
-            <!--        app:layout_constraintStart_toStartOf="@+id/category_details"-->
-            <!--        app:layout_constraintTop_toBottomOf="@+id/category_details" />-->
-
-
-            <ImageView
-                android:id="@+id/listImage"
-                android:layout_width="78dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="52dp"
-                android:layout_marginEnd="40dp"
-                android:src="@drawable/listimage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/currencyChip"
-                style="@style/CustomChipStyle"
-                android:layout_width="52dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="49dp"
-                android:checkable="false"
-                android:gravity="center"
-                android:text="Meals"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="@+id/listImage"
-                app:layout_constraintStart_toStartOf="@+id/listImage"
-                app:layout_constraintTop_toBottomOf="@+id/listImage"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/category_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/category_details"
-                app:layout_constraintStart_toStartOf="@+id/category_details"
-                app:layout_constraintTop_toBottomOf="@+id/category_details" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

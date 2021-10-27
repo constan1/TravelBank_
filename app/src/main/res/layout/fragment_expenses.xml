@@ -34,23 +34,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="45dp"
-                    android:layout_marginEnd="15dp"
-                    app:layout_constraintEnd_toEndOf="@+id/total"
-                    app:layout_constraintHorizontal_bias="0.077"
-                    app:layout_constraintStart_toStartOf="@+id/total"
-                    app:layout_constraintTop_toBottomOf="@+id/total" />
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="45dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/total"
+                    loadDataForTextTotal="@{expensesViewModel.readExpenses}"
+                    networkResponseForTextTotal="@{expensesViewModel.expensesResponse}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:text="Total: "
-                    loadDataForTextTotal="@{expensesViewModel.readExpenses}"
-                    networkResponseForTextTotal="@{expensesViewModel.expensesResponse}"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,6 +63,7 @@
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="15dp"
                     android:text=""
+                    android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/total"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,11 +86,11 @@
                     networkResponseForImage="@{expensesViewModel.expensesResponse}"
                     android:layout_width="150dp"
                     android:layout_height="99dp"
-                    android:layout_marginStart="308dp"
-                    android:layout_marginTop="216dp"
                     android:visibility="invisible"
-                    app:layout_constraintStart_toStartOf="@+id/expenses_list"
-                    app:layout_constraintTop_toTopOf="@+id/expenses_list"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/noconnection" />
 
                 <com.github.ybq.android.spinkit.SpinKitView
@@ -96,11 +99,11 @@
                     android:layout_width="49dp"
                     android:layout_height="39dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="304dp"
-                    android:layout_marginEnd="180dp"
                     android:visibility="invisible"
                     app:SpinKit_Color="@color/main"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

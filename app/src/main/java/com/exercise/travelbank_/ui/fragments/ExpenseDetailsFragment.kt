@@ -44,7 +44,7 @@ class ExpenseDetailsFragment : Fragment() {
         binding.editTextMerchantTitle.setText(args.expenses.expenseVenueTitle)
         binding.editTextAmount.setText(args.expenses.amount.toString())
         binding.editTextdate.setText(expensesViewModel.dateConverter(args.expenses.date))
-        binding.categoryValue.text = args.expenses.tripBudgetCategory
+        binding.ccategoryValue.text = args.expenses.tripBudgetCategory
         binding.currencyChip.text = args.expenses.currencyCode
         binding.editTextDetailsDescription.setText(args.expenses.description)
 

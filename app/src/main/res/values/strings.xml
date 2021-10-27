@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" />
+    <string name="app_name" >TravelBank_</string>
     <string name="No_Price_Found"> </string>
     <string name="price">$ %s</string>
 
