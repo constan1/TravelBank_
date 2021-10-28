@@ -27,19 +27,19 @@ import javax.inject.Inject
 class ExpensesViewModel @Inject constructor(
 
     private val repository: Repository,
-    application: Application
+    application: Application?
 
-) : AndroidViewModel(application)
+) : AndroidViewModel(application!!)
 {
 
     /**Local Cached Data */
 
-    var readExpenses: LiveData<List<ExpensesEntity>> = repository.localData.getAllExpenses().asLiveData()
+    var readExpenses: LiveData<List<ExpensesEntity>> = repository.localData!!.getAllExpenses().asLiveData()
 
 
     private fun cacheExpenses(expensesEntity: ExpensesEntity) =
         viewModelScope.launch(Dispatchers.IO){
-            repository.localData.cacheExpenses(expensesEntity)
+            repository.localData!!.cacheExpenses(expensesEntity)
         }
 
 
@@ -58,7 +58,7 @@ class ExpensesViewModel @Inject constructor(
 
        if(checkInternetConnection()){
            try {
-               val response = repository.remoteData.getExpenses()
+               val response = repository.remoteData!!.getExpenses()
                expensesResponse.value = handleReturnedResponse(response)
 
                val expensesResponseValue = expensesResponse.value!!.data
@@ -78,13 +78,13 @@ class ExpensesViewModel @Inject constructor(
        }
    }
 
-    private fun cacheRemoteExpenses(expensesResponse_: List<ExpensesDTO>) {
+     fun cacheRemoteExpenses(expensesResponse_: List<ExpensesDTO>) {
 
         val expensesEntity = ExpensesEntity(expensesResponse_)
         cacheExpenses(expensesEntity)
     }
 
-    private fun handleReturnedResponse(response: Response<List<ExpensesDTO>>): NetworkResource<List<ExpensesDTO>> {
+     fun handleReturnedResponse(response: Response<List<ExpensesDTO>>): NetworkResource<List<ExpensesDTO>> {
 
         return when {
             response.code() == 404 ->{
@@ -117,18 +117,18 @@ class ExpensesViewModel @Inject constructor(
     }
 
 
-    /** Expense Details */
 
     @SuppressLint("SimpleDateFormat")
     fun dateConverter(date: String) : String{
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
         val convertedDate: Date = format.parse(date)!!
-        val month = DateFormat.format("MMM", convertedDate) as String
-        val day = DateFormat.format("dd", convertedDate) as String
-        val year = DateFormat.format("yyyy",convertedDate) as String
+        val month = DateFormat.format("MMM", convertedDate) as String?
+        val day = DateFormat.format("dd", convertedDate) as String?
+        val year = DateFormat.format("yyyy",convertedDate) as String?
 
         return "$month $day, $year"
+
 
     }
 

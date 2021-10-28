@@ -125,8 +125,6 @@ class ExpensesFragment : Fragment() {
                 database->
                 if(database.isNotEmpty()){
 
-
-
                    var totalPrice = 0.0
                     mainAdapter.setData(database[0].expensesResponse)
 

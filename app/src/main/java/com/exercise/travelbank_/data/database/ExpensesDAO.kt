@@ -15,8 +15,5 @@ interface ExpensesDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun cacheExpenses(expensesEntity: ExpensesEntity)
 
-    @Query("DELETE FROM Expenses")
-    suspend fun deleteAllExpenses()
-
 
 }
