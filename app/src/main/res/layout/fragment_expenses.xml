@@ -114,6 +114,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="7dp"
                     android:text="$"
+                    android:textColor="#616161"
                     app:layout_constraintEnd_toStartOf="@+id/total_amount"
                     app:layout_constraintStart_toEndOf="@+id/total"
                     app:layout_constraintTop_toTopOf="parent" />
