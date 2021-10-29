@@ -46,9 +46,7 @@ class ExpensesFragment : Fragment() {
     private lateinit var expensesNetworkListener: ExpensesNetworkListener
 
 
-
     private lateinit var progressBar: ProgressBar
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +62,7 @@ class ExpensesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentExpensesBinding.inflate(inflater,container,false)
+        _binding = FragmentExpensesBinding.inflate(inflater, container, false)
 
         activity?.title = "Expenses"
         binding.lifecycleOwner = this
@@ -77,13 +75,16 @@ class ExpensesFragment : Fragment() {
         setUpList()
 
         lifecycleScope.launch {
-           expensesNetworkListener = ExpensesNetworkListener()
-            if(expensesNetworkListener.internetConnection(requireContext())){
+            expensesNetworkListener = ExpensesNetworkListener()
+            if (expensesNetworkListener.internetConnection(requireContext())) {
                 readCachedExpenses()
-            }
-            else {
+            } else {
                 readCachedExpenses()
-                Toast.makeText(requireContext(),"Please Check Your Network Connection & Retry",Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Please Check Your Network Connection & Retry",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
         }
@@ -91,13 +92,16 @@ class ExpensesFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             lifecycleScope.launch {
                 expensesNetworkListener = ExpensesNetworkListener()
-                if(expensesNetworkListener.internetConnection(requireContext())){
+                if (expensesNetworkListener.internetConnection(requireContext())) {
                     requestDataAfterRefresh()
                     binding.swipeRefresh.isRefreshing = false
 
-                }
-                else {
-                    Toast.makeText(requireContext(),"Please Check Your Network Connection & Retry",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please Check Your Network Connection & Retry",
+                        Toast.LENGTH_LONG
+                    ).show()
                     binding.swipeRefresh.isRefreshing = false
                 }
             }
@@ -109,7 +113,8 @@ class ExpensesFragment : Fragment() {
         return binding.root
 
     }
-    private fun setUpList(){
+
+    private fun setUpList() {
         val recyclerViewRoot = binding.root.findViewById<RecyclerView>(R.id.expenses_list)
 
         recyclerViewRoot.adapter = mainAdapter
@@ -117,24 +122,22 @@ class ExpensesFragment : Fragment() {
 
     }
 
-    private fun readCachedExpenses(){
+    private fun readCachedExpenses() {
 
 
         lifecycleScope.launch {
-            expensesViewModel.readExpenses.observeOnce(viewLifecycleOwner, {
-                database->
-                if(database.isNotEmpty()){
+            expensesViewModel.readExpenses.observeOnce(viewLifecycleOwner, { database ->
+                if (database.isNotEmpty()) {
 
-                   var totalPrice = 0.0
+                    var totalPrice = 0.0
                     mainAdapter.setData(database[0].expensesResponse)
 
-                    for(amount in database[0].expensesResponse){
-                        totalPrice +=amount.amount
+                    for (amount in database[0].expensesResponse) {
+                        totalPrice += amount.amount
                     }
                     binding.totalAmount.text = totalPrice.toString()
 
-                }
-                else {
+                } else {
                     requestRemoteData()
                 }
 
@@ -143,7 +146,7 @@ class ExpensesFragment : Fragment() {
 
     }
 
-    private fun requestDataAfterRefresh(){
+    private fun requestDataAfterRefresh() {
 
 
         expensesViewModel.getExpenses()
@@ -154,21 +157,21 @@ class ExpensesFragment : Fragment() {
     private fun requestRemoteData() {
 
         expensesViewModel.getExpenses()
-        expensesViewModel.expensesResponse.observe(viewLifecycleOwner,{
-            response ->
-            when(response){
+        expensesViewModel.expensesResponse.observe(viewLifecycleOwner, { response ->
+            when (response) {
                 is NetworkResource.Success -> {
                     progressBar.visibility = View.GONE
 
                     var totalPrice = 0.0
                     response.data?.let {
-                            for(amount in it){
-                                totalPrice += amount.amount
+                        for (amount in it) {
+                            totalPrice += amount.amount
 
                         }
 
                         binding.totalAmount.text = totalPrice.toString()
-                        mainAdapter.setData(it)}
+                        mainAdapter.setData(it)
+                    }
 
                 }
                 is NetworkResource.Error -> {
@@ -179,8 +182,8 @@ class ExpensesFragment : Fragment() {
                     progressBar.visibility = View.GONE
                 }
 
-                is NetworkResource.Loading ->{
-                   progressBar = binding.loading
+                is NetworkResource.Loading -> {
+                    progressBar = binding.loading
                     val wave: Sprite = Wave()
                     progressBar.indeterminateDrawable = wave
                     progressBar.visibility = View.VISIBLE
@@ -193,8 +196,8 @@ class ExpensesFragment : Fragment() {
 
     private fun loadLocalCacheData() {
         lifecycleScope.launch {
-            expensesViewModel.readExpenses.observe(viewLifecycleOwner, {database ->
-                if(database.isNotEmpty()){
+            expensesViewModel.readExpenses.observe(viewLifecycleOwner, { database ->
+                if (database.isNotEmpty()) {
                     mainAdapter.setData(database[0].expensesResponse)
                 }
             })
@@ -205,7 +208,6 @@ class ExpensesFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
 
 }

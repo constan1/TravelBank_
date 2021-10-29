@@ -27,23 +27,27 @@ import javax.inject.Inject
 class ExpensesViewModel @Inject constructor(
 
     private val repository: Repository,
-    application: Application?
+    application: Application
 
-) : AndroidViewModel(application!!)
-{
+) : AndroidViewModel(application) {
 
-    /**Local Cached Data */
+    /**
+     *Local Cached Data
+     */
 
-    var readExpenses: LiveData<List<ExpensesEntity>> = repository.localData!!.getAllExpenses().asLiveData()
+    var readExpenses: LiveData<List<ExpensesEntity>> =
+        repository.localData!!.getAllExpenses().asLiveData()
 
 
     private fun cacheExpenses(expensesEntity: ExpensesEntity) =
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             repository.localData!!.cacheExpenses(expensesEntity)
         }
 
 
-    /**Remote Data */
+    /**
+     * Remote Data
+     */
 
     var expensesResponse: MutableLiveData<NetworkResource<List<ExpensesDTO>>> = MutableLiveData()
 
@@ -53,44 +57,42 @@ class ExpensesViewModel @Inject constructor(
         getExpensesCallResult()
     }
 
-   private suspend fun getExpensesCallResult(){
-       expensesResponse.value = NetworkResource.Loading()
+    private suspend fun getExpensesCallResult() {
+        expensesResponse.value = NetworkResource.Loading()
 
-       if(checkInternetConnection()){
-           try {
-               val response = repository.remoteData!!.getExpenses()
-               expensesResponse.value = handleReturnedResponse(response)
+        if (checkInternetConnection()) {
+            try {
+                val response = repository.remoteData!!.getExpenses()
+                expensesResponse.value = handleReturnedResponse(response)
 
-               val expensesResponseValue = expensesResponse.value!!.data
+                val expensesResponseValue = expensesResponse.value!!.data
 
 
-               if(expensesResponseValue!=null){
-                   cacheRemoteExpenses(expensesResponseValue)
-               }
+                if (expensesResponseValue != null) {
+                    cacheRemoteExpenses(expensesResponseValue)
+                }
 
-           } catch (e:Exception){
-               expensesResponse.value = NetworkResource.Error(e.message.toString())
-           }
-       }
-       else
-       {
-          expensesResponse.value = NetworkResource.Error("No internet Connection")
-       }
-   }
+            } catch (e: Exception) {
+                expensesResponse.value = NetworkResource.Error(e.message.toString())
+            }
+        } else {
+            expensesResponse.value = NetworkResource.Error("No internet Connection")
+        }
+    }
 
-     fun cacheRemoteExpenses(expensesResponse_: List<ExpensesDTO>) {
+    fun cacheRemoteExpenses(expensesResponse_: List<ExpensesDTO>) {
 
         val expensesEntity = ExpensesEntity(expensesResponse_)
         cacheExpenses(expensesEntity)
     }
 
-     fun handleReturnedResponse(response: Response<List<ExpensesDTO>>): NetworkResource<List<ExpensesDTO>> {
+    fun handleReturnedResponse(response: Response<List<ExpensesDTO>>): NetworkResource<List<ExpensesDTO>> {
 
         return when {
-            response.code() == 404 ->{
+            response.code() == 404 -> {
                 NetworkResource.Error("404 - Not Found")
             }
-            response.isSuccessful ->{
+            response.isSuccessful -> {
                 val expensesResponse = response.body()
                 NetworkResource.Success(expensesResponse!!)
             }
@@ -100,12 +102,12 @@ class ExpensesViewModel @Inject constructor(
         }
     }
 
-    private fun checkInternetConnection(): Boolean{
+    private fun checkInternetConnection(): Boolean {
         val connectivityManager = getApplication<Application>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
 
-        val activeNetwork = connectivityManager.activeNetwork?: return false
+        val activeNetwork = connectivityManager.activeNetwork ?: return false
         val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
 
         return when {
@@ -118,28 +120,31 @@ class ExpensesViewModel @Inject constructor(
 
 
 
+    /**
+     * Utility Functions For View.
+     */
+
     @SuppressLint("SimpleDateFormat")
-    fun dateConverter(date: String) : String{
+    fun dateConverter(date: String): String {
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
         val convertedDate: Date = format.parse(date)!!
         val month = DateFormat.format("MMM", convertedDate) as String?
         val day = DateFormat.format("dd", convertedDate) as String?
-        val year = DateFormat.format("yyyy",convertedDate) as String?
+        val year = DateFormat.format("yyyy", convertedDate) as String?
 
         return "$month $day, $year"
 
 
     }
 
-    fun loadImage( binding: FragmentExpenseDetailsBinding, image: String?){
-        if(image == null){
-            binding.listImage.load(R.drawable.ic_image_error){
+    fun loadImage(binding: FragmentExpenseDetailsBinding, image: String?) {
+        if (image == null) {
+            binding.listImage.load(R.drawable.ic_image_error) {
                 crossfade(600)
             }
-        }
-        else {
-            binding.listImage.load(image){
+        } else {
+            binding.listImage.load(image) {
                 crossfade(600)
             }
         }

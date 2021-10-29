@@ -1,10 +1,11 @@
-package com.exercise.travelbank_
+package com.exercise.travelbank_.ui.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.exercise.travelbank_.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -31,15 +32,11 @@ class MainActivity : AppCompatActivity() {
         )
 
 
-
-
-
-
     }
 
-    private fun getNavController():NavController{
+    private fun getNavController(): NavController {
         val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)
-        check(fragment is NavHostFragment){
+        check(fragment is NavHostFragment) {
             ("Activity " + this
                     + " does not have a NavHostFragment")
         }

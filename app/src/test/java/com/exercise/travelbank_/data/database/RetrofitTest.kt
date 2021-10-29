@@ -17,10 +17,10 @@ class RetrofitCallTest {
 
     private var mockWebServer = MockWebServer()
 
-    private lateinit var expenseResponse : ExpensesApi
+    private lateinit var expenseResponse: ExpensesApi
 
     @Before
-    fun setup(){
+    fun setup() {
         mockWebServer.start()
 
         expenseResponse = Retrofit.Builder()
@@ -31,12 +31,12 @@ class RetrofitCallTest {
     }
 
     @After
-    fun teardown(){
+    fun teardown() {
         mockWebServer.shutdown()
     }
 
     @Test
-    fun `Response expenseResponse responseCode200`(){
+    fun `Response expenseResponse responseCode200`() {
         val response = MockResponse()
             .status
 

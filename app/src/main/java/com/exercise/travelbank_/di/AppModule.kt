@@ -22,8 +22,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient
-    {
+    fun provideHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
@@ -32,15 +31,15 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideConverterFactory(): GsonConverterFactory
-    {
+    fun provideConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
 
     @Provides
     @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient,
-    gsonConverterFactory: GsonConverterFactory
+    fun providesRetrofit(
+        okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(ExpensesApi.BASE_URL)
@@ -55,11 +54,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(application:Application): ExpensesDatabase =
-      Room.databaseBuilder(application, ExpensesDatabase::class.java,
-      "expenses_database")
-          .fallbackToDestructiveMigration()
-          .build()
+    fun provideDatabase(application: Application): ExpensesDatabase =
+        Room.databaseBuilder(
+            application, ExpensesDatabase::class.java,
+            "expenses_database"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Singleton
     @Provides

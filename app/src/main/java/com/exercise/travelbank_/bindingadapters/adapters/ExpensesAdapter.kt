@@ -14,18 +14,20 @@ import com.exercise.travelbank_.util.ExpensesDiffUtil
 class ExpensesAdapter : RecyclerView.Adapter<ExpensesAdapter.ExpensesHolder>() {
 
     private var currentExpense = emptyList<ExpensesDTO>()
-  class ExpensesHolder(private val binding: ItemExpensesRowBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    class ExpensesHolder(private val binding: ItemExpensesRowBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(expensesDTO: ExpensesDTO){
+        fun bind(expensesDTO: ExpensesDTO) {
             binding.expenses = expensesDTO
             binding.executePendingBindings()
         }
 
         companion object {
-            fun from(parent:ViewGroup): ExpensesHolder{
+            fun from(parent: ViewGroup): ExpensesHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemExpensesRowBinding.inflate(layoutInflater,parent,false)
+                val binding = ItemExpensesRowBinding.inflate(layoutInflater, parent, false)
                 return ExpensesHolder(binding)
             }
         }
@@ -37,7 +39,7 @@ class ExpensesAdapter : RecyclerView.Adapter<ExpensesAdapter.ExpensesHolder>() {
     }
 
     override fun onBindViewHolder(holder: ExpensesHolder, position: Int) {
-       val currentExpense = currentExpense[position]
+        val currentExpense = currentExpense[position]
         holder.bind(currentExpense)
     }
 
@@ -45,7 +47,7 @@ class ExpensesAdapter : RecyclerView.Adapter<ExpensesAdapter.ExpensesHolder>() {
         return currentExpense.size
     }
 
-    fun setData(newData: List<ExpensesDTO>){
+    fun setData(newData: List<ExpensesDTO>) {
         val expensesDiffUtil = ExpensesDiffUtil(currentExpense, newData)
         val diffUtilResult = DiffUtil.calculateDiff(expensesDiffUtil)
 

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TravelBank_">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.fragments.MainActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

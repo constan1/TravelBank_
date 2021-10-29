@@ -15,9 +15,7 @@ import com.exercise.travelbank_.viewmodels.ExpensesViewModel
 class ExpenseDetailsFragment : Fragment() {
 
 
-
-
-    private var _binding : FragmentExpenseDetailsBinding? = null
+    private var _binding: FragmentExpenseDetailsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var expensesViewModel: ExpensesViewModel
@@ -39,7 +37,7 @@ class ExpenseDetailsFragment : Fragment() {
     ): View {
 
 
-        _binding = FragmentExpenseDetailsBinding.inflate(inflater,container,false)
+        _binding = FragmentExpenseDetailsBinding.inflate(inflater, container, false)
 
         binding.editTextMerchantTitle.setText(args.expenses.expenseVenueTitle)
         binding.editTextAmount.setText(args.expenses.amount.toString())
@@ -49,7 +47,8 @@ class ExpenseDetailsFragment : Fragment() {
         binding.editTextDetailsDescription.setText(args.expenses.description)
 
         binding.close.setOnClickListener {
-            val action = ExpenseDetailsFragmentDirections.actionExpenseDetailsFragmentToExpensesFragment()
+            val action =
+                ExpenseDetailsFragmentDirections.actionExpenseDetailsFragmentToExpensesFragment()
             findNavController().navigate(action)
         }
 

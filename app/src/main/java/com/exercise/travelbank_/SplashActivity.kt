@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.constraintlayout.motion.widget.MotionLayout
+import com.exercise.travelbank_.ui.fragments.MainActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class SplashActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
         val motionLayout: MotionLayout = findViewById(R.id.motion_layout)
 
-        motionLayout.addTransitionListener(object: MotionLayout.TransitionListener{
+        motionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
             override fun onTransitionStarted(
                 motionLayout: MotionLayout?,
                 startId: Int,

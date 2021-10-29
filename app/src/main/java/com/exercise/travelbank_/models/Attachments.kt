@@ -10,4 +10,4 @@ import kotlinx.parcelize.Parcelize
 data class Attachments(
     @SerializedName("thumbnails")
     val thumbnails: Thumbnails
-):Parcelable
+) : Parcelable

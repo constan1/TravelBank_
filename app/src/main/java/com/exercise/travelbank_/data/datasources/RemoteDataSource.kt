@@ -7,9 +7,9 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
     private val ExpensesApi: ExpensesApi
-){
+) {
 
-   suspend fun getExpenses():Response<List<ExpensesDTO>>{
+    suspend fun getExpenses(): Response<List<ExpensesDTO>> {
         return ExpensesApi.getExpenses()
     }
 }

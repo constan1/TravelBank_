@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import com.exercise.travelbank_.models.ExpensesDTO
 
 
-
 @Entity(tableName = "Expenses")
 class ExpensesEntity(
 

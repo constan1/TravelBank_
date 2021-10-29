@@ -11,16 +11,15 @@ class ExpensesTypeConverter {
 
 
     @TypeConverter
-    fun expenseresponseToString(expensesResponse:  List<ExpensesDTO>): String{
+    fun expenseresponseToString(expensesResponse: List<ExpensesDTO>): String {
         return gson.toJson(expensesResponse)
     }
 
     @TypeConverter
-    fun stringToExpenseResponse(data: String):List<ExpensesDTO>{
-        val listType = object: TypeToken<List<ExpensesDTO>>() {}.type
-        return gson.fromJson(data,listType)
+    fun stringToExpenseResponse(data: String): List<ExpensesDTO> {
+        val listType = object : TypeToken<List<ExpensesDTO>>() {}.type
+        return gson.fromJson(data, listType)
     }
-
 
 
 }

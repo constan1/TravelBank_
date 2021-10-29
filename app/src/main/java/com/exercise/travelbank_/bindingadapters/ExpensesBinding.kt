@@ -1,7 +1,6 @@
 package com.exercise.travelbank_.bindingadapters
 
 import android.annotation.SuppressLint
-import android.net.Network
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -10,7 +9,6 @@ import com.exercise.travelbank_.R
 import com.exercise.travelbank_.models.Attachments
 import java.text.SimpleDateFormat
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
@@ -26,17 +24,18 @@ class ExpensesBinding {
     companion object {
 
 
-
-
         @BindingAdapter("onExpenseToDetails")
         @JvmStatic
-        fun onExpensesToDetails(expensesRow: ConstraintLayout, expenses:ExpensesDTO){
+        fun onExpensesToDetails(expensesRow: ConstraintLayout, expenses: ExpensesDTO) {
 
             expensesRow.setOnClickListener {
                 try {
-                    val action = ExpensesFragmentDirections.actionExpensesFragmentToExpenseDetailsFragment(expenses)
+                    val action =
+                        ExpensesFragmentDirections.actionExpensesFragmentToExpenseDetailsFragment(
+                            expenses
+                        )
                     expensesRow.findNavController().navigate(action)
-                } catch (e: Exception){
+                } catch (e: Exception) {
 
                 }
             }
@@ -47,13 +46,12 @@ class ExpensesBinding {
         @JvmStatic
         fun loadThumbNail(imageView: ImageView, attachements: List<Attachments>?) {
 
-            if(attachements == null){
-                imageView.load(R.drawable.ic_image_error){
+            if (attachements == null) {
+                imageView.load(R.drawable.ic_image_error) {
                     crossfade(600)
                 }
-            }
-            else {
-                imageView.load( attachements[0].thumbnails.list) {
+            } else {
+                imageView.load(attachements[0].thumbnails.list) {
                     crossfade(600)
                 }
             }
@@ -96,7 +94,6 @@ class ExpensesBinding {
         }
 
 
-
         @BindingAdapter("setCategory")
         @JvmStatic
         fun setCategory(textView: TextView, category: String) {
@@ -105,67 +102,58 @@ class ExpensesBinding {
         }
 
 
-        @BindingAdapter("networkResponseForImage","loadDataForImage",requireAll = true)
+        @BindingAdapter("networkResponseForImage", "loadDataForImage", requireAll = true)
         @JvmStatic
         fun errorNoInternetImageView(
             imageView: ImageView,
-            apiResponse:NetworkResource<List<ExpensesDTO>>?,
+            apiResponse: NetworkResource<List<ExpensesDTO>>?,
             database: List<ExpensesEntity>?
         ) {
-            if(apiResponse is NetworkResource.Error && database.isNullOrEmpty()){
+            if (apiResponse is NetworkResource.Error && database.isNullOrEmpty()) {
                 imageView.visibility = View.VISIBLE
-            }
-            else if(apiResponse is NetworkResource.Loading){
+            } else if (apiResponse is NetworkResource.Loading) {
                 imageView.visibility = View.INVISIBLE
-            }
-            else if(apiResponse is NetworkResource.Success){
+            } else if (apiResponse is NetworkResource.Success) {
                 imageView.visibility = View.INVISIBLE
             }
         }
-        @BindingAdapter("networkResponseForText", "loadDataForText",requireAll = true)
+
+        @BindingAdapter("networkResponseForText", "loadDataForText", requireAll = true)
         @JvmStatic
         fun errorNoInternetTextview(
             textView: TextView,
             apiResponse: NetworkResource<List<ExpensesDTO>>?,
             database: List<ExpensesEntity>?
-        )
-        {
-            if(apiResponse is NetworkResource.Error && database.isNullOrEmpty()){
+        ) {
+            if (apiResponse is NetworkResource.Error && database.isNullOrEmpty()) {
                 textView.visibility = View.VISIBLE
                 textView.text = apiResponse.message.toString()
 
-            }
-            else if (apiResponse is NetworkResource.Loading)
-            {
+            } else if (apiResponse is NetworkResource.Loading) {
                 textView.visibility = View.INVISIBLE
 
-            }
-            else if(apiResponse is NetworkResource.Success){
+            } else if (apiResponse is NetworkResource.Success) {
 
                 textView.visibility = View.INVISIBLE
 
             }
         }
 
-        @BindingAdapter("networkResponseForTextTotal", "loadDataForTextTotal",requireAll = true)
+        @BindingAdapter("networkResponseForTextTotal", "loadDataForTextTotal", requireAll = true)
         @JvmStatic
         fun errorNoInternetTotalTextview(
             textView: TextView,
             apiResponse: NetworkResource<List<ExpensesDTO>>?,
             database: List<ExpensesEntity>?
-        )
-        {
-            if(apiResponse is NetworkResource.Error && database.isNullOrEmpty()){
+        ) {
+            if (apiResponse is NetworkResource.Error && database.isNullOrEmpty()) {
                 textView.visibility = View.INVISIBLE
 
-            }
-            else if (apiResponse is NetworkResource.Loading)
-            {
+            } else if (apiResponse is NetworkResource.Loading) {
                 textView.text = "Loading..."
                 textView.visibility = View.VISIBLE
 
-            }
-            else if(apiResponse is NetworkResource.Success){
+            } else if (apiResponse is NetworkResource.Success) {
 
                 textView.text = "Total: "
                 textView.visibility = View.VISIBLE
@@ -176,7 +164,6 @@ class ExpensesBinding {
 
 
     }
-
 
 
 }

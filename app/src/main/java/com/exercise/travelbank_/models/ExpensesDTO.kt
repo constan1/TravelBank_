@@ -6,7 +6,6 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 
-
 @Parcelize
 data class ExpensesDTO(
     @SerializedName("amount")
@@ -29,4 +28,4 @@ data class ExpensesDTO(
 
     @SerializedName("currencyCode")
     val currencyCode: String,
-):Parcelable
+) : Parcelable

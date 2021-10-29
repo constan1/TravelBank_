@@ -7,12 +7,13 @@ import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
     private val expensesDAO: ExpensesDAO
-){
+) {
 
-   fun getAllExpenses(): Flow<List<ExpensesEntity>>{
+    fun getAllExpenses(): Flow<List<ExpensesEntity>> {
         return expensesDAO.getAllExpenses()
     }
- suspend fun cacheExpenses(expensesEntity: ExpensesEntity){
+
+    suspend fun cacheExpenses(expensesEntity: ExpensesEntity) {
         expensesDAO.cacheExpenses(expensesEntity)
     }
 }

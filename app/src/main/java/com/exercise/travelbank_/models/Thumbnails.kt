@@ -8,4 +8,4 @@ import kotlinx.parcelize.Parcelize
 data class Thumbnails(
     @SerializedName("list")
     val list: String
-):Parcelable
+) : Parcelable
